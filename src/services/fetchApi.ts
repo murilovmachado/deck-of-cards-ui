@@ -6,17 +6,19 @@ type Success = {
 
 const baseUrl = 'https://deckofcardsapi.com/api/deck';
 
+const defaultOptions = {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+};
+
 const fetchApi = async <T extends Success>(endPoint: string): Promise<T> => {
   const url = `${baseUrl}/${endPoint}`
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, defaultOptions);
     const result = await response.json();
-
-    if (result.success) {
-      return result;
-    } else {
-      throw new Error('Uknown Error');
-    }
+    return result;
   } catch (error) {
     throw error;
   }

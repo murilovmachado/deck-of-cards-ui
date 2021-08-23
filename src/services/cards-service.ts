@@ -14,7 +14,7 @@ type Card = {
   code: string;
 };
 
-type DrawCardResponse = {
+export type DrawCardResponse = {
   success: boolean;
   cards: Card[];
   deck_id: string,
@@ -22,5 +22,7 @@ type DrawCardResponse = {
 };
 
 export const requestDeck = () => fetchApi<RequestDeckResponse>('new');
+
+export const shuffleDeck = (deckId: string) => fetchApi<RequestDeckResponse>(`${deckId}/shuffle/`);
 
 export const drawCard = (deckId: string) => fetchApi<DrawCardResponse>(`${deckId}/draw/?count=1`);
