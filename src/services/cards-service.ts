@@ -1,7 +1,26 @@
-import fetch from 'node-fetch';
+import fetchApi from './fetchApi';
 
-const baseUrl = 'https://deckofcardsapi.com/api/deck';
+type RequestDeckResponse = {
+  success: boolean;
+  deck_id: string;
+  shuffled: boolean,
+  remaining: number;
+}
 
-export const requestDeck = () => fetch(`${baseUrl}/new`);
+type Card = {
+  image: string;
+  value: string;
+  suit: string;
+  code: string;
+};
 
-export const drawCard = (deckId: string) => fetch(`${baseUrl}/${deckId}/draw/?count=1`);
+type DrawCardResponse = {
+  success: boolean;
+  cards: Card[];
+  deck_id: string,
+  remaining: number;
+};
+
+export const requestDeck = () => fetchApi<RequestDeckResponse>('new');
+
+export const drawCard = (deckId: string) => fetchApi<DrawCardResponse>(`${deckId}/draw/?count=1`);
